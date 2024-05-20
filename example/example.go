@@ -33,7 +33,7 @@ func (*Example) Columns() *ExampleColumns {
 }
 
 type ExampleColumns struct {
-	gormcnm.ColumnBaseFuncClass //继承操作函数，让查询更便捷
+	gormcnm.ColumnOperationClass //继承操作函数，让查询更便捷
 	// 模型各个列名和类型:
 	ID        gormcnm.ColumnName[int32]
 	Name      gormcnm.ColumnName[string]

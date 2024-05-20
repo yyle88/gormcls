@@ -29,7 +29,6 @@ func TestMain(m *testing.M) {
 
 	caseDB = db //a global variable caseDB
 	m.Run()
-
 }
 
 func TestExample(t *testing.T) {

@@ -1,13 +1,13 @@
-package example
+package example1
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/done"
 	"github.com/yyle88/gormcls"
+	"github.com/yyle88/gormcls/internal/examples/example1/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -16,32 +16,30 @@ import (
 var caseDB *gorm.DB
 
 func TestMain(m *testing.M) {
-	fmt.Println("run_test_main")
 	db := done.VCE(gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})).Nice()
-
 	defer func() {
 		done.Done(done.VCE(db.DB()).Nice().Close())
 	}()
 
-	done.Done(db.AutoMigrate(&Example{}))
+	done.Done(db.AutoMigrate(&models.Example{}))
 
-	caseDB = db //a global variable caseDB
+	caseDB = db
 	m.Run()
 }
 
 func TestExample(t *testing.T) {
-	var db = caseDB
+	var db *gorm.DB = caseDB
 
-	example1 := &Example{
+	example1 := &models.Example{
 		ID:        0,
 		Name:      "aaa",
 		Age:       1,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
-	example2 := &Example{
+	example2 := &models.Example{
 		ID:        0,
 		Name:      "bbb",
 		Age:       2,
@@ -52,37 +50,31 @@ func TestExample(t *testing.T) {
 	require.NoError(t, db.Create(example1).Error)
 	require.NoError(t, db.Create(example2).Error)
 
-	var resA Example
-	if one, cls := gormcls.Use(&Example{}); cls.OK() {
+	var resA models.Example
+	if one, cls := gormcls.Use(&models.Example{}); cls.OK() {
 		require.NoError(t, db.Table(one.TableName()).Where(cls.Name.Eq("aaa")).First(&resA).Error)
+		require.Equal(t, "aaa", resA.Name)
 	}
 	t.Log("select res.name:", resA.Name)
-	require.Equal(t, "aaa", resA.Name)
 
 	var maxAge int
-	if one, cls := gormcls.Use(&Example{}); cls.OK() {
+	if one, cls := gormcls.Use(&models.Example{}); cls.OK() {
 		require.NoError(t, db.Model(one).Where(cls.Age.Gt(0)).Select(cls.Age.CoalesceMaxStmt("age_alias")).First(&maxAge).Error)
+		require.Equal(t, 2, maxAge)
 	}
 	t.Log("max_age:", maxAge)
-	require.Equal(t, 2, maxAge)
 
-	if one, cls := gormcls.Use(&Example{}); cls.OK() {
-		var resB Example
-
-		require.NoError(t, db.Table(one.TableName()).Where(cls.Name.Eq("bbb")).Update(cls.Age.Kv(18)).Error)
-
-		require.NoError(t, db.Table(one.TableName()).Where(cls.Name.Eq("bbb")).First(&resB).Error)
-
-		t.Log("new_age:", resB.Age)
-		require.Equal(t, 18, resB.Age)
+	if one, cls := gormcls.Use(&models.Example{}); cls.OK() {
+		require.NoError(t, db.Model(one).Where(cls.Name.Eq("bbb")).Update(cls.Age.Kv(18)).Error)
+		require.Equal(t, 18, one.Age)
 	}
 
-	var resB Example
-	if one, cls := gormcls.Use(&Example{}); cls.OK() {
-		require.NoError(t, db.Table(one.TableName()).Where(cls.Name.Eq("bbb")).Update(cls.Age.KeAdd(2)).Error)
+	var resB models.Example
+	if cls := resB.Columns(); cls.OK() {
+		require.NoError(t, db.Table(resB.TableName()).Where(cls.Name.Eq("bbb")).Update(cls.Age.KeAdd(2)).Error)
 
-		require.NoError(t, db.Table(one.TableName()).Where(cls.Name.Eq("bbb")).First(&resB).Error)
+		require.NoError(t, db.Table(resB.TableName()).Where(cls.Name.Eq("bbb")).First(&resB).Error)
+		require.Equal(t, 20, resB.Age)
 	}
-	t.Log("new_age:", resB.Age)
-	require.Equal(t, 20, resB.Age)
+	t.Log(resB)
 }

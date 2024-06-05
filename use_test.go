@@ -30,14 +30,18 @@ func TestUse(t *testing.T) {
 		require.True(t, cls.OK())
 	}
 
+	//当需要暴露这个变量到下文时
 	var account models.Account
 	if cls := account.Columns(); cls.OK() {
 		//if err := db.Where(***).First(&account).Error; err != nil {***}
+		t.Log("-")
 	}
 
+	//当需要暴露这个变量到下文时
 	var example models.Example
 	if cls := example.Columns(); cls.OK() {
 		//if err := db.Where(***).First(&example).Error; err != nil {***}
+		t.Log("-")
 	}
 
 	//这个时候你就很清楚自己用的是哪些变量，要不然代码复杂时就容易混淆

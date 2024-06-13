@@ -1,6 +1,7 @@
 package gormcls
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -46,4 +47,36 @@ func TestUse(t *testing.T) {
 
 	//这个时候你就很清楚自己用的是哪些变量，要不然代码复杂时就容易混淆
 	t.Log(account.TableName(), example.TableName())
+}
+
+func TestOne(t *testing.T) {
+	{
+		var account = makeAccount()
+		// 由于这里返回的不是指针，在存储的时候就需要取地址，这样运行时才不会报错
+		// if err := db.Create(&account).Error; err != nil {***}
+
+		// 2000 THOUSAND YEARS LATER.
+		// 假设过了很长时间。
+		// 假如哪天重构代码时，我又把前面的函数改为了返回指针类型，这时候代码在静态检查时感知不到错误，但实际传的是二级指针类型，这就完蛋啦
+
+		// 因此我发明了这个函数，能够确保你传给 db.Create 的就是指针类型的数据
+		// 这样当重构函数时，把返回值改为二级指针也没事，在静态检查时就会报错，也就能让人更放心大胆的写逻辑
+		one := One(&account)
+		// 只有 one 是指针的时候才能调用 Save 函数
+		// if err := db.Save(one).Error; err != nil {***}
+		// 这样就没问题啦
+		require.Equal(t, reflect.Ptr, reflect.TypeOf(one).Kind())
+	}
+	{
+		example := models.Example{}
+		// one := One(example) // 静态检查不过，编译不过，能有效避免问题
+		one := One(&example)
+		// if err := db.Create(one).Error; err != nil {***}
+		// 这样就没问题啦
+		require.Equal(t, reflect.Ptr, reflect.TypeOf(one).Kind())
+	}
+}
+
+func makeAccount() models.Account {
+	return models.Account{}
 }

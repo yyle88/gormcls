@@ -59,7 +59,7 @@ func TestExample(t *testing.T) {
 
 	var maxAge int
 	if one, cls := gormcls.Use(&models.Example{}); cls.OK() {
-		require.NoError(t, db.Model(one).Where(cls.Age.Gt(0)).Select(cls.Age.CoalesceMaxStmt("age_alias")).First(&maxAge).Error)
+		require.NoError(t, db.Model(one).Where(cls.Age.Gt(0)).Select(cls.Age.COALESCE().MaxStmt("age_alias")).First(&maxAge).Error)
 		require.Equal(t, 2, maxAge)
 	}
 	t.Log("max_age:", maxAge)

@@ -80,3 +80,16 @@ func TestOne(t *testing.T) {
 func makeAccount() models.Account {
 	return models.Account{}
 }
+
+func TestUsa(t *testing.T) {
+	examples, cls := Usa(&models.Example{})
+	require.True(t, cls.OK())
+	t.Log(examples)
+}
+
+func TestUas(t *testing.T) {
+	one, examples, cls := Uas(&models.Example{})
+	require.True(t, cls.OK())
+	t.Log(one.TableName())
+	t.Log(examples)
+}

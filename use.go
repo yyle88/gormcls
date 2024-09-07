@@ -17,6 +17,16 @@ type ColumnsIFace[CLS any] interface {
 	Columns() CLS
 }
 
+// Usa 当你需要 Find 而不是 First 就很有用
+func Usa[MOD ColumnsIFace[CLS], CLS any](a MOD) ([]MOD, CLS) {
+	return []MOD{}, a.Columns()
+}
+
+// Uas 当你需要 Find 而且需要 Model 时有用
+func Uas[MOD ColumnsIFace[CLS], CLS any](a MOD) (MOD, []MOD, CLS) {
+	return a, []MOD{}, a.Columns()
+}
+
 // One 这个函数也是有神奇的功能，比如gorm的Create或者Save函数只接受指针类型，这个函数能在编译阶段就判定传的是不是指针类型，以便于后面调用Create或者Save函数
 func One[MOD ColumnsIFace[CLS], CLS any](a MOD) MOD {
 	return a //把数据原封不动的返回来，因为按照 gormcngen 的默认规则，只给类型生成 func (*X) Columns() XColumns {} 这样的成员函数

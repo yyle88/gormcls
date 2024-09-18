@@ -5,6 +5,11 @@ func Use[MOD ColumnsIFace[CLS], CLS any](one MOD) (MOD, CLS) {
 	return one, one.Columns()
 }
 
+// Umc 返回 mod 和 cls 两个结果，跟 Use 作用相同
+func Umc[MOD ColumnsIFace[CLS], CLS any](one MOD) (MOD, CLS) {
+	return one, one.Columns()
+}
+
 // Cls 当你完全不需要mod而只需要cls的时候 就很有用
 func Cls[MOD ColumnsIFace[CLS], CLS any](one MOD) CLS {
 	return one.Columns()
@@ -15,13 +20,13 @@ type ColumnsIFace[CLS any] interface {
 	Columns() CLS
 }
 
-// Ucs 就是返回模型的数组 以便于使用 Find 查询. s means slice
-func Ucs[MOD ColumnsIFace[CLS], CLS any](one MOD) ([]MOD, CLS) {
+// Usc 就是返回模型的数组 以便于使用 Find 查询. s means slice. c means class.
+func Usc[MOD ColumnsIFace[CLS], CLS any](one MOD) ([]MOD, CLS) {
 	return []MOD{}, one.Columns()
 }
 
-// Usc 当你需要 Find 而且需要 Model 时有用
-func Usc[MOD ColumnsIFace[CLS], CLS any](one MOD) (MOD, []MOD, CLS) {
+// Msc 当你需要 Find 而且需要 Model 时有用
+func Msc[MOD ColumnsIFace[CLS], CLS any](one MOD) (MOD, []MOD, CLS) {
 	return one, []MOD{}, one.Columns()
 }
 

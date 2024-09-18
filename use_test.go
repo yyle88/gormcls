@@ -95,14 +95,14 @@ func TestUms(t *testing.T) {
 	t.Log(examples)
 }
 
-func TestUss(t *testing.T) {
-	examples, cls := Ucs(&models.Example{})
+func TestUsc(t *testing.T) {
+	examples, cls := Usc(&models.Example{})
 	require.True(t, cls.OK())
 	t.Log(examples)
 }
 
-func TestUas(t *testing.T) {
-	one, examples, cls := Usc(&models.Example{})
+func TestMsc(t *testing.T) {
+	one, examples, cls := Msc(&models.Example{})
 	require.True(t, cls.OK())
 	t.Log(one.TableName())
 	t.Log(examples)

@@ -43,14 +43,14 @@ func TestCompare(t *testing.T) {
 		{
 			stm := time.Now()
 			for i := 0; i < count; i++ {
-				models.Usc(one) //由于使用缓存所以这里只计算一次，目前看来性能提升幅度比较有限，而且涉及到DB的操作瓶颈都在DB那边
+				models.UmcV2(one) //由于使用缓存所以这里只计算一次，目前看来性能提升幅度比较有限，而且涉及到DB的操作瓶颈都在DB那边
 			}
 			t.Log("--1--", time.Since(stm))
 		}
 		{
 			stm := time.Now()
 			for i := 0; i < count; i++ {
-				models.Usm(one) //使用的缓存不同，这两种缓存方案几乎没有性能差异
+				models.UmcV3(one) //使用的缓存不同，这两种缓存方案几乎没有性能差异
 			}
 			t.Log("--2--", time.Since(stm))
 		}
@@ -75,14 +75,14 @@ func TestAccount(t *testing.T) {
 	require.NoError(t, db.Create(account2).Error)
 
 	var resA models.Account
-	if one, cls := models.Usc(&models.Account{}); cls.OK() {
+	if one, cls := models.UmcV2(&models.Account{}); cls.OK() {
 		require.NoError(t, db.Table(one.TableName()).Where(cls.Username.Eq("abc")).First(&resA).Error)
 		require.Equal(t, "abc", resA.Username)
 	}
 	t.Log("select res.username:", resA.Username)
 
 	var resB models.Account
-	if one, cls := models.Usc(&models.Account{}); cls.OK() {
+	if one, cls := models.UmcV2(&models.Account{}); cls.OK() {
 		require.NoError(t, db.Table(one.TableName()).Where(cls.Username.Eq("aaa")).First(&resB).Error)
 		require.Equal(t, "aaa", resB.Username)
 	}

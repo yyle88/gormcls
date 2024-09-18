@@ -50,7 +50,7 @@ func TestCompare(t *testing.T) {
 		{
 			stm := time.Now()
 			for i := 0; i < count; i++ {
-				models.Uss(one) //使用的缓存不同，这两种缓存方案几乎没有性能差异
+				models.Usm(one) //使用的缓存不同，这两种缓存方案几乎没有性能差异
 			}
 			t.Log("--2--", time.Since(stm))
 		}

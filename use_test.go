@@ -6,12 +6,14 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/gormcls/internal/examples/example1/models"
+	"github.com/yyle88/neatjson/neatjsons"
 )
 
 func TestUse(t *testing.T) {
 	//假如需要使用 cls 这个变量
 	if account, cls := Use(&models.Account{}); cls.OK() {
 		t.Log(account.TableName())
+		t.Log(neatjsons.S(cls))
 	}
 
 	{ //跟这个是等效的，把变量 account 和 cls 限制在较小的作用域内
@@ -23,6 +25,7 @@ func TestUse(t *testing.T) {
 	//假如需要再次使用 cls 这个变量
 	if example, cls := Use(&models.Example{}); cls.OK() {
 		t.Log(example.TableName())
+		t.Log(neatjsons.S(cls))
 	}
 
 	{ //跟这个是等效的，把变量 example 和 cls 限制在较小的作用域内
@@ -49,9 +52,15 @@ func TestUse(t *testing.T) {
 	t.Log(account.TableName(), example.TableName())
 }
 
+func TestCls(t *testing.T) {
+	cls := Cls(&models.Account{})
+	require.True(t, cls.OK())
+	t.Log(neatjsons.S(cls))
+}
+
 func TestOne(t *testing.T) {
 	{
-		var account = makeAccount()
+		var account = makeAccountObject()
 		// 由于这里返回的不是指针，在存储的时候就需要取地址，这样运行时才不会报错
 		// if err := db.Create(&account).Error; err != nil {***}
 
@@ -77,18 +86,23 @@ func TestOne(t *testing.T) {
 	}
 }
 
-func makeAccount() models.Account {
+func makeAccountObject() models.Account {
 	return models.Account{}
 }
 
-func TestUsa(t *testing.T) {
-	examples, cls := Usa(&models.Example{})
+func TestUms(t *testing.T) {
+	examples := Ums(&models.Example{})
+	t.Log(examples)
+}
+
+func TestUss(t *testing.T) {
+	examples, cls := Ucs(&models.Example{})
 	require.True(t, cls.OK())
 	t.Log(examples)
 }
 
 func TestUas(t *testing.T) {
-	one, examples, cls := Uas(&models.Example{})
+	one, examples, cls := Usc(&models.Example{})
 	require.True(t, cls.OK())
 	t.Log(one.TableName())
 	t.Log(examples)

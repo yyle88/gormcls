@@ -1,4 +1,4 @@
-package gormclc
+package gormclsm
 
 import (
 	"sync"

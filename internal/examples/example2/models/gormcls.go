@@ -3,7 +3,7 @@ package models
 import (
 	"sync"
 
-	"github.com/yyle88/gormcls/gormclc"
+	"github.com/yyle88/gormcls/gormclsm"
 	"github.com/yyle88/mutexmap"
 )
 
@@ -11,14 +11,14 @@ import (
 var cache2 = mutexmap.NewMap[string, interface{}](2)
 
 // UmcV2 就是用的工具包中的 UmcV2 逻辑，由于go目前不允许类的成员函数名为泛型，这里只能是定义个普通的函数，函数内部用全局变量缓存信息
-func UmcV2[MOD gormclc.ColumnsTableNameIFace[CLS], CLS any](a MOD) (MOD, CLS) {
-	return gormclc.UmcV2(a, cache2)
+func UmcV2[MOD gormclsm.ColumnsTableNameIFace[CLS], CLS any](a MOD) (MOD, CLS) {
+	return gormclsm.UmcV2(a, cache2)
 }
 
 // 这是第二套方案的缓存变量
 var cache3 = &sync.Map{}
 
 // UmcV3 就是用的工具包中的 UmcV3 逻辑
-func UmcV3[MOD gormclc.ColumnsTableNameIFace[CLS], CLS any](a MOD) (MOD, CLS) {
-	return gormclc.UmcV3(a, cache3)
+func UmcV3[MOD gormclsm.ColumnsTableNameIFace[CLS], CLS any](a MOD) (MOD, CLS) {
+	return gormclsm.UmcV3(a, cache3)
 }

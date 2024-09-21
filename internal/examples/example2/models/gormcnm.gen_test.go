@@ -1,12 +1,11 @@
 package models
 
 import (
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/yyle88/done"
 	"github.com/yyle88/gormcngen"
+	"github.com/yyle88/osexistpath/osmustexist"
 	"github.com/yyle88/runpath/runtestpath"
 )
 
@@ -18,7 +17,7 @@ func TestGenerate(t *testing.T) {
 	t.Log(absPath)
 
 	//出于安全起见，需要需要判断目标文件是已经存在的，需要手动创建该文件，让代码能找到此文件
-	require.Equal(t, "gormcnm.gen.go", done.VCE(os.Stat(absPath)).Nice().Name())
+	require.True(t, osmustexist.File(absPath))
 
 	//在这里写下你要生成的 models 的对象列表，指针类型或非指针类型都是可以的，选中生成模型
 	objects := []any{&Account{}, &Example{}}

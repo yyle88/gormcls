@@ -15,7 +15,7 @@ type ColumnsTableNameIFace[CLS any] interface {
 
 // UmcV2 在实现 Use 隔离【作用域】的同时，增加缓存效果，即避免总是调用 Columns 函数生成 gormcnm 的对象，而是把这个对象缓存起来，能提高些性能(当然不介意这部分性能的也可以不用它)
 func UmcV2[MOD ColumnsTableNameIFace[CLS], CLS any](a MOD, cache *mutexmap.Map[string, interface{}]) (MOD, CLS) {
-	vax, _ := cache.GetOrzSet(a.TableName(), func() interface{} {
+	vax, _ := cache.Getset(a.TableName(), func() interface{} {
 		return a.Columns()
 	})
 	cls, ok := vax.(CLS)

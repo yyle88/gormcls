@@ -6,11 +6,11 @@ require (
 	github.com/stretchr/testify v1.9.0
 	github.com/yyle88/done v1.0.11
 	github.com/yyle88/erero v1.0.11
-	github.com/yyle88/gormcngen v1.0.24
+	github.com/yyle88/gormcngen v1.0.25
 	github.com/yyle88/gormcnm v1.0.34
 	github.com/yyle88/mutexmap v1.0.6
 	github.com/yyle88/neatjson v0.0.8
-	github.com/yyle88/osexistpath v0.0.5
+	github.com/yyle88/osexistpath v0.0.8
 	github.com/yyle88/runpath v1.0.9
 	gorm.io/driver/sqlite v1.5.6
 	gorm.io/gorm v1.25.12
@@ -27,8 +27,8 @@ require (
 	github.com/yyle88/must v0.0.3 // indirect
 	github.com/yyle88/sortslice v1.0.4 // indirect
 	github.com/yyle88/sure v0.0.23 // indirect
-	github.com/yyle88/syntaxgo v0.0.27 // indirect
-	github.com/yyle88/zaplog v0.0.11 // indirect
+	github.com/yyle88/syntaxgo v0.0.30 // indirect
+	github.com/yyle88/zaplog v0.0.13 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/mod v0.21.0 // indirect

@@ -16,7 +16,7 @@ import (
 var caseDB *gorm.DB
 
 func TestMain(m *testing.M) {
-	db := done.VCE(gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{
+	db := done.VCE(gorm.Open(sqlite.Open("file::memory:?cache=private"), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})).Nice()
 	defer func() {

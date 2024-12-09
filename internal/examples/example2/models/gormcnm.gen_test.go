@@ -22,9 +22,9 @@ func TestGenerate(t *testing.T) {
 	//在这里写下你要生成的 models 的对象列表，指针类型或非指针类型都是可以的，选中生成模型
 	objects := []any{&Account{}, &Example{}}
 
-	options := &gormcngen.Options{
-		ExportGeneratedStruct: true, //中间类型名称的样式为可导出的 ExampleColumns
-	}
+	options := gormcngen.NewOptions().
+		WithExportGeneratedStruct(true) //中间类型名称的样式为可导出的 ExampleColumns
+
 	cfg := gormcngen.NewConfigs(objects, options, absPath)
 	cfg.Gen() //将会把生成后的代码写到目标位置，即 "gormcnm.gen.go" 这个文件里
 }

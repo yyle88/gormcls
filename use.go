@@ -1,51 +1,61 @@
 package gormcls
 
-// Use 这个函数起到隔离【作用域】的功能，避免临时变量在函数中的作用域过大，避免重名变量混淆
-func Use[MOD ColumnsIFace[CLS], CLS any](one MOD) (MOD, CLS) {
+// Use returns the model (`mod`) and its associated columns (`cls`), ideal for queries or operations that need both.
+// Use 返回模型（`mod`）、关联的列（`cls`），适用于需要同时获取模型和列数据的查询或操作。
+func Use[MOD modelType[CLS], CLS any](one MOD) (MOD, CLS) {
 	return one, one.Columns()
 }
 
-// Umc 返回 mod 和 cls 两个结果，跟 Use 作用相同
-func Umc[MOD ColumnsIFace[CLS], CLS any](one MOD) (MOD, CLS) {
+// Umc returns the model (mod) and the associated columns (cls), functioning identically to the Use function.
+// Umc 返回模型（mod）和关联的列（cls），功能与 Use 函数相同。
+func Umc[MOD modelType[CLS], CLS any](one MOD) (MOD, CLS) {
 	return one, one.Columns()
 }
 
-// Cls 当你完全不需要mod而只需要cls的时候 就很有用
-func Cls[MOD ColumnsIFace[CLS], CLS any](one MOD) CLS {
+// Cls returns the column information (`cls`), useful when only column data is needed.
+// Cls 返回列信息（`cls`），适用于仅需要列数据的场景。
+func Cls[MOD modelType[CLS], CLS any](one MOD) CLS {
 	return one.Columns()
 }
 
-// ColumnsIFace 配合 https://github.com/yyle88/gormcngen 使用，因为里面的默认函数就是 Columns
-type ColumnsIFace[CLS any] interface {
+// modelType is used for models that implement the Columns method to return associated columns (cls).
+// modelType 用于实现 Columns 方法以返回关联列（cls）的模型。
+type modelType[CLS any] interface {
 	Columns() CLS
 }
 
-// Usc 就是返回模型的数组 以便于使用 Find 查询. s means slice. c means class.
-func Usc[MOD ColumnsIFace[CLS], CLS any](one MOD) ([]MOD, CLS) {
+// Usc returns a slice of models (`MOD`) and the associated columns (`cls`), suitable for queries returning multiple models (e.g., `Find` queries).
+// Usc 返回多个模型（`MOD`）、关联的列（`cls`），适用于返回多个模型的查询（如 `Find` 查询）。
+func Usc[MOD modelType[CLS], CLS any](one MOD) ([]MOD, CLS) {
 	return []MOD{}, one.Columns()
 }
 
-// Msc 当你需要 Find 而且需要 Model 时有用
-func Msc[MOD ColumnsIFace[CLS], CLS any](one MOD) (MOD, []MOD, CLS) {
+// Msc returns the model (`mod`), the model slice (`[]MOD`), and the associated columns (`cls`), useful for queries requiring both model and column data.
+// Msc 返回模型（`mod`）、模型切片（`[]MOD`）、关联的列（`cls`），适用于需要模型和列数据的查询。
+func Msc[MOD modelType[CLS], CLS any](one MOD) (MOD, []MOD, CLS) {
 	return one, []MOD{}, one.Columns()
 }
 
-// One 这个函数也是有神奇的功能，比如gorm的Create或者Save函数只接受指针类型，这个函数能在编译阶段就判定传的是不是指针类型，以便于后面调用Create或者Save函数
-func One[MOD ColumnsIFace[CLS], CLS any](one MOD) MOD {
-	return one //把数据原封不动的返回来，因为按照 gormcngen 的默认规则，只给类型生成 func (*X) Columns() XColumns {} 这样的成员函数
+// One returns the model (mod), ensuring type safety by checking whether the argument is a pointer type at compile-time.
+// One 返回模型（mod），通过编译时检查确保类型安全。
+func One[MOD modelType[CLS], CLS any](one MOD) MOD {
+	return one // 按照 gormcngen 的默认规则，类型只会生成 func (*X) Columns() XColumns {} 这样的成员函数
 }
 
-// Ums 得到对象数组. 当你需要 Find 而不是 First 就很有用，s means slice
-func Ums[MOD ColumnsIFace[CLS], CLS any](MOD) []MOD {
+// Ums returns a slice of models (MOD), useful for queries that expect a slice of models (e.g., Find queries).
+// Ums 返回模型（mod）切片，适用于需要模型切片的查询（例如 Find 查询）。
+func Ums[MOD modelType[CLS], CLS any](MOD) []MOD {
 	return []MOD{}
 }
 
-// Uss 得到对象数组
-func Uss[MOD ColumnsIFace[CLS], CLS any]() []MOD {
+// Uss returns an empty slice of models (MOD), typically used for initialization or preparing for future object population without needing the columns (CLS).
+// Uss 返回一个空的模型（mod）切片，通常用于初始化或为未来填充对象做准备，无需关联列（cls）。
+func Uss[MOD modelType[CLS], CLS any]() []MOD {
 	return []MOD{}
 }
 
-// Usn 得到对象数组
-func Usn[MOD ColumnsIFace[CLS], CLS any](cap int) []MOD {
+// Usn returns a slice of models (MOD) with a specified initial capacity, optimizing memory allocation based on the expected number of objects (MOD).
+// Usn 返回一个具有指定初始容量的模型（mod）切片，优化内存分配以适应预期的对象数量（MOD）。
+func Usn[MOD modelType[CLS], CLS any](cap int) []MOD {
 	return make([]MOD, 0, cap)
 }

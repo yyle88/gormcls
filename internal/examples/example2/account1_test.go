@@ -43,16 +43,23 @@ func TestCompare(t *testing.T) {
 		{
 			stm := time.Now()
 			for i := 0; i < count; i++ {
-				models.UmcV2(one) //由于使用缓存所以这里只计算一次，目前看来性能提升幅度比较有限，而且涉及到DB的操作瓶颈都在DB那边
+				models.UmcV1(one) //由于使用缓存所以这里只计算一次，目前看来性能提升幅度比较有限，而且涉及到DB的操作瓶颈都在DB那边
 			}
 			t.Log("--1--", time.Since(stm))
 		}
 		{
 			stm := time.Now()
 			for i := 0; i < count; i++ {
-				models.UmcV3(one) //使用的缓存不同，这两种缓存方案几乎没有性能差异
+				models.UmcV2(one) //由于使用缓存所以这里只计算一次，目前看来性能提升幅度比较有限，而且涉及到DB的操作瓶颈都在DB那边
 			}
 			t.Log("--2--", time.Since(stm))
+		}
+		{
+			stm := time.Now()
+			for i := 0; i < count; i++ {
+				models.UmcV3(one) //使用的缓存不同，这两种缓存方案几乎没有性能差异
+			}
+			t.Log("--3--", time.Since(stm))
 		}
 	}
 }

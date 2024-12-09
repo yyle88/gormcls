@@ -51,8 +51,8 @@ func TestExample(t *testing.T) {
 	require.NoError(t, db.Create(example2).Error)
 
 	var resA models.Example
-	if one, cls := gormcls.Use(&models.Example{}); cls.OK() {
-		require.NoError(t, db.Table(one.TableName()).Where(cls.Name.Eq("aaa")).First(&resA).Error)
+	if cls := gormcls.Cls(&models.Example{}); cls.OK() {
+		require.NoError(t, db.Table(resA.TableName()).Where(cls.Name.Eq("aaa")).First(&resA).Error)
 		require.Equal(t, "aaa", resA.Name)
 	}
 	t.Log("select res.name:", resA.Name)

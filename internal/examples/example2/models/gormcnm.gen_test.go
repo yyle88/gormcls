@@ -23,7 +23,7 @@ func TestGenerate(t *testing.T) {
 	objects := []any{&Account{}, &Example{}}
 
 	options := gormcngen.NewOptions().
-		WithExportGeneratedStruct(true) //中间类型名称的样式为可导出的 ExampleColumns
+		WithColumnClassExportable(true) //中间类型名称的样式为可导出的 ExampleColumns
 
 	cfg := gormcngen.NewConfigs(objects, options, absPath)
 	cfg.Gen() //将会把生成后的代码写到目标位置，即 "gormcnm.gen.go" 这个文件里

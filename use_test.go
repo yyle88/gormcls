@@ -103,7 +103,7 @@ func TestGenerateColumns(t *testing.T) {
 	objects := []any{&Account{}, &Example{}}
 
 	options := gormcngen.NewOptions().
-		WithExportGeneratedStruct(true). // Generate exportable struct names (e.g., ExampleColumns) // 生成可导出的结构体名称（例如 ExampleColumns）
+		WithColumnClassExportable(true). // Generate exportable struct names (e.g., ExampleColumns) // 生成可导出的结构体名称（例如 ExampleColumns）
 		WithColumnsMethodRecvName("a").
 		WithColumnsCheckFieldType(true)
 

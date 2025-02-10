@@ -99,5 +99,6 @@ If you find this package helpful, give it a star on GitHub!
 
 Give me stars. Thank you!!!
 
-## See stars
-[![see stars](https://starchart.cc/yyle88/gormcls.svg?variant=adaptive)](https://starchart.cc/yyle88/gormcls)
+## Starring
+
+[![starring](https://starchart.cc/yyle88/gormcls.svg?variant=adaptive)](https://starchart.cc/yyle88/gormcls)

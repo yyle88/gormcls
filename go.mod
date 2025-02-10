@@ -6,7 +6,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/done v1.0.21
 	github.com/yyle88/erero v1.0.17
-	github.com/yyle88/gormcngen v1.0.35
+	github.com/yyle88/gormcngen v1.0.36
 	github.com/yyle88/gormcnm v1.0.46
 	github.com/yyle88/mutexmap v1.0.10
 	github.com/yyle88/neatjson v0.0.11
@@ -27,7 +27,7 @@ require (
 	github.com/yyle88/must v0.0.13 // indirect
 	github.com/yyle88/printgo v1.0.2 // indirect
 	github.com/yyle88/rese v0.0.3 // indirect
-	github.com/yyle88/sortslice v1.0.6 // indirect
+	github.com/yyle88/sortslice v1.0.7 // indirect
 	github.com/yyle88/sure v0.0.36 // indirect
 	github.com/yyle88/syntaxgo v0.0.44 // indirect
 	github.com/yyle88/tern v0.0.5 // indirect

@@ -200,6 +200,22 @@ func TestUmsWithExample(t *testing.T) {
 	t.Logf("Ums result: %s", neatjsons.S(examples))
 }
 
+// Demonstrates the usage of the Uss function with the Example model.
+// 演示如何使用 Uss 函数处理 Example 模型。
+func TestUssWithExample(t *testing.T) {
+	examples := gormcls.Uss[*Example]()
+	t.Logf("Uss result: %s", neatjsons.S(examples))
+	t.Logf("result cap: %d", cap(examples))
+}
+
+// Demonstrates the usage of the Usn function with the Example model.
+// 演示如何使用 Usn 函数处理 Example 模型。
+func TestUsnWithExample(t *testing.T) {
+	examples := gormcls.Usn[*Example](100)
+	t.Logf("Usn result: %s", neatjsons.S(examples))
+	t.Logf("result cap: %d", cap(examples))
+}
+
 // Demonstrates the usage of the Usc function with the Example model.
 // 演示如何使用 Usc 函数处理 Example 模型。
 func TestUscWithExample(t *testing.T) {

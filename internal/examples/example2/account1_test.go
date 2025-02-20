@@ -36,7 +36,7 @@ func TestCompare(t *testing.T) {
 		{
 			stm := time.Now()
 			for i := 0; i < count; i++ {
-				gormcls.Use(one) //由于不使用缓存所以每次都要计算，但实际也能看到影响是特别小的
+				gormcls.Umc(one) //由于不使用缓存所以每次都要计算，但实际也能看到影响是特别小的
 			}
 			t.Log("--0--", time.Since(stm))
 		}

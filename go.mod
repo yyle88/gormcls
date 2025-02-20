@@ -5,7 +5,7 @@ go 1.22.8
 require (
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/done v1.0.21
-	github.com/yyle88/erero v1.0.17
+	github.com/yyle88/erero v1.0.18
 	github.com/yyle88/gormcngen v1.0.36
 	github.com/yyle88/gormcnm v1.0.46
 	github.com/yyle88/mutexmap v1.0.10

@@ -106,15 +106,35 @@ func TestRepo_First(t *testing.T) {
 	repo := gormrepo.NewRepo(gormrepo.Dmc(db, &Account{}))
 	require.True(t, repo.OK())
 
-	one, err := repo.First(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
-		return db.Where(cls.Username.Eq("demo-1-username"))
-	})
-	require.NoError(t, err)
-	require.Equal(t, "demo-1-nickname", one.Nickname)
+	{
+		one, err := repo.First(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Where(cls.Username.Eq("demo-1-username"))
+		})
+		require.NoError(t, err)
+		require.Equal(t, "demo-1-nickname", one.Nickname)
+	}
 
-	two, err := repo.First(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
-		return db.Where(cls.Username.Eq("demo-2-username"))
-	})
-	require.NoError(t, err)
-	require.Equal(t, "demo-2-nickname", two.Nickname)
+	{
+		two, err := repo.First(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Where(cls.Username.Eq("demo-2-username"))
+		})
+		require.NoError(t, err)
+		require.Equal(t, "demo-2-nickname", two.Nickname)
+	}
+
+	{
+		exist, err := repo.Exist(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Where(cls.Username.Eq("demo-1-username"))
+		})
+		require.NoError(t, err)
+		require.True(t, exist)
+	}
+
+	{
+		exist, err := repo.Exist(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Where(cls.Username.Eq("demo-x-username"))
+		})
+		require.NoError(t, err)
+		require.False(t, exist)
+	}
 }

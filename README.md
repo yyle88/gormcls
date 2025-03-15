@@ -1,15 +1,15 @@
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/yyle88/gormcls/release.yml?branch=main&label=BUILD)](https://github.com/yyle88/gormcls/actions/workflows/release.yml?query=branch%3Amain)
-[![GoDoc](https://pkg.go.dev/badge/github.com/yyle88/gormcls)](https://pkg.go.dev/github.com/yyle88/gormcls)
-[![Coverage Status](https://img.shields.io/coveralls/github/yyle88/gormcls/master.svg)](https://coveralls.io/github/yyle88/gormcls?branch=main)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/yyle88/gormrepo/release.yml?branch=main&label=BUILD)](https://github.com/yyle88/gormrepo/actions/workflows/release.yml?query=branch%3Amain)
+[![GoDoc](https://pkg.go.dev/badge/github.com/yyle88/gormrepo)](https://pkg.go.dev/github.com/yyle88/gormrepo)
+[![Coverage Status](https://img.shields.io/coveralls/github/yyle88/gormrepo/master.svg)](https://coveralls.io/github/yyle88/gormrepo?branch=main)
 ![Supported Go Versions](https://img.shields.io/badge/Go-1.22%2C%201.23-lightgrey.svg)
-[![GitHub Release](https://img.shields.io/github/release/yyle88/gormcls.svg)](https://github.com/yyle88/gormcls/releases)
-[![Go Report Card](https://goreportcard.com/badge/github.com/yyle88/gormcls)](https://goreportcard.com/report/github.com/yyle88/gormcls)
+[![GitHub Release](https://img.shields.io/github/release/yyle88/gormcls.svg)](https://github.com/yyle88/gormrepo/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/yyle88/gormrepo)](https://goreportcard.com/report/github.com/yyle88/gormrepo)
 
-# gormcls - Isolate the scope of temporary variables when using GORM, making the code more concise
+# gormrepo - Isolate the scope of temporary variables when using GORM, making the code more concise
 
-`gormcls` isolates the **scope of temporary variables** when working with `GORM`, simplifying database operations and making the code more concise.
+`gormrepo` isolates the **scope of temporary variables** when working with `GORM`, simplifying database operations and making the code more concise.
 
-`gormcls` works in conjunction with [gormcnm](https://github.com/yyle88/gormcnm) and [gormcngen](https://github.com/yyle88/gormcngen), simplifying GORM development and optimizing the management of temporary variable scopes.
+`gormrepo` works in conjunction with [gormcnm](https://github.com/yyle88/gormcnm) and [gormcngen](https://github.com/yyle88/gormcngen), simplifying GORM development and optimizing the management of temporary variable scopes.
 
 ---
 
@@ -22,7 +22,7 @@
 ## Installation
 
 ```bash
-go get github.com/yyle88/gormcls
+go get github.com/yyle88/gormrepo
 ```
 
 ---
@@ -83,7 +83,7 @@ if one, cls := gormcls.Use(&Example{}); cls.OK() {
 
 ## License
 
-`gormcls` is open-source and released under the MIT License. See the [LICENSE](LICENSE) file for more information.
+`gormrepo` is open-source and released under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 ---
 
@@ -95,10 +95,10 @@ If you find this package helpful, give it a star on GitHub!
 
 **Thank you for your support!**
 
-**Happy Coding with `gormcls`!** 🎉
+**Happy Coding with `gormrepo`!** 🎉
 
 Give me stars. Thank you!!!
 
 ## Starring
 
-[![starring](https://starchart.cc/yyle88/gormcls.svg?variant=adaptive)](https://starchart.cc/yyle88/gormcls)
+[![starring](https://starchart.cc/yyle88/gormcls.svg?variant=adaptive)](https://starchart.cc/yyle88/gormrepo)

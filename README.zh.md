@@ -1,8 +1,8 @@
-# gormcls - 隔离临时变量的作用域，简化 GORM 操作
+# gormrepo - 隔离临时变量的作用域，简化 GORM 操作
 
-`gormcls` 在使用 `GORM` 时，**隔离临时变量的作用域**，简化数据库操作，使代码更加简洁。
+`gormrepo` 在使用 `GORM` 时，**隔离临时变量的作用域**，简化数据库操作，使代码更加简洁。
 
-`gormcls` 跟 [gormcnm](https://github.com/yyle88/gormcnm) 和 [gormcngen](https://github.com/yyle88/gormcngen) 配合使用，能简化 GORM 开发并优化临时变量作用域的管理。
+`gormrepo` 跟 [gormcnm](https://github.com/yyle88/gormcnm) 和 [gormcngen](https://github.com/yyle88/gormcngen) 配合使用，能简化 GORM 开发并优化临时变量作用域的管理。
 
 ---
 
@@ -15,7 +15,7 @@
 ## 安装
 
 ```bash
-go get github.com/yyle88/gormcls
+go get github.com/yyle88/gormrepo
 ```
 
 ---
@@ -76,7 +76,7 @@ if one, cls := gormcls.Use(&Example{}); cls.OK() {
 
 ## 许可
 
-`gormcls` 是一个开源项目，发布于 MIT 许可证下。有关更多信息，请参阅 [LICENSE](LICENSE) 文件。
+`gormrepo` 是一个开源项目，发布于 MIT 许可证下。有关更多信息，请参阅 [LICENSE](LICENSE) 文件。
 
 ## 贡献与支持
 

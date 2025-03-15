@@ -1,16 +1,19 @@
-module github.com/yyle88/gormcls
+module github.com/yyle88/gormrepo
 
 go 1.22.8
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/done v1.0.22
 	github.com/yyle88/erero v1.0.19
 	github.com/yyle88/gormcngen v1.0.37
 	github.com/yyle88/gormcnm v1.0.47
+	github.com/yyle88/must v0.0.16
 	github.com/yyle88/mutexmap v1.0.10
 	github.com/yyle88/neatjson v0.0.11
 	github.com/yyle88/osexistpath v0.0.16
+	github.com/yyle88/rese v0.0.4
 	github.com/yyle88/runpath v1.0.23
 	gorm.io/driver/sqlite v1.5.7
 	gorm.io/gorm v1.25.12
@@ -24,9 +27,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/yyle88/formatgo v1.0.22 // indirect
-	github.com/yyle88/must v0.0.16 // indirect
 	github.com/yyle88/printgo v1.0.2 // indirect
-	github.com/yyle88/rese v0.0.4 // indirect
 	github.com/yyle88/sortslice v1.0.7 // indirect
 	github.com/yyle88/sure v0.0.36 // indirect
 	github.com/yyle88/syntaxgo v0.0.45 // indirect

@@ -3,8 +3,8 @@ package models
 import (
 	"sync"
 
-	"github.com/yyle88/gormcls/gormclasscache"
-	"github.com/yyle88/gormcls/gormmodelclass"
+	"github.com/yyle88/gormrepo/gormclasscache"
+	"github.com/yyle88/gormrepo/gormmodelclass"
 	"github.com/yyle88/mutexmap"
 	"github.com/yyle88/mutexmap/cachemap"
 )

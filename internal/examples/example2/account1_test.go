@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/done"
-	"github.com/yyle88/gormcls"
-	"github.com/yyle88/gormcls/internal/examples/example2/models"
+	"github.com/yyle88/gormrepo/gormcls"
+	"github.com/yyle88/gormrepo/internal/examples/example2/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

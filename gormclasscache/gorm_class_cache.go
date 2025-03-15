@@ -1,4 +1,4 @@
-package gormclsm
+package gormclasscache
 
 import (
 	"sync"

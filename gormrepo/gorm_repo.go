@@ -1,16 +1,9 @@
 package gormrepo
 
 import (
-	"github.com/yyle88/gormcls/internal/classtype"
 	"github.com/yyle88/must"
 	"gorm.io/gorm"
 )
-
-// Dmc returns the database(db) model (mod) and the associated columns (cls).
-// Dmc 返回 数据库(db) 模型（mod）和关联的列（cls）。
-func Dmc[MOD classtype.ModelType[CLS], CLS any](db *gorm.DB, one MOD) (*gorm.DB, MOD, CLS) {
-	return db, one, one.Columns()
-}
 
 type Repo[MOD any, CLS any] struct {
 	db  *gorm.DB
@@ -45,4 +38,40 @@ func (repo *Repo[MOD, CLS]) Exist(where func(db *gorm.DB, cls CLS) *gorm.DB) (bo
 		return false, err
 	}
 	return exists, nil
+}
+
+func (repo *Repo[MOD, CLS]) Find(where func(db *gorm.DB, cls CLS) *gorm.DB) ([]*MOD, error) {
+	var results []*MOD
+	db := where(repo.db, repo.cls)
+	if err := db.Find(&results).Error; err != nil {
+		return nil, err
+	}
+	return results, nil
+}
+
+func (repo *Repo[MOD, CLS]) FindN(where func(db *gorm.DB, cls CLS) *gorm.DB, size int) ([]*MOD, error) {
+	var results = make([]*MOD, 0, size)
+	db := where(repo.db, repo.cls)
+	if err := db.Limit(size).Find(&results).Error; err != nil {
+		return nil, err
+	}
+	return results, nil
+}
+
+func (repo *Repo[MOD, CLS]) Update(where func(db *gorm.DB, cls CLS) *gorm.DB, valueFunc func(cls CLS) (string, interface{})) error {
+	db := where(repo.db, repo.cls)
+	column, value := valueFunc(repo.cls)
+	if err := db.Model(new(MOD)).Update(column, value).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (repo *Repo[MOD, CLS]) Updates(where func(db *gorm.DB, cls CLS) *gorm.DB, valuesFunc func(cls CLS) map[string]interface{}) error {
+	db := where(repo.db, repo.cls)
+	mp := valuesFunc(repo.cls)
+	if err := db.Model(new(MOD)).Updates(mp).Error; err != nil {
+		return err
+	}
+	return nil
 }

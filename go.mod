@@ -3,11 +3,12 @@ module github.com/yyle88/gormcls
 go 1.22.8
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/done v1.0.22
 	github.com/yyle88/erero v1.0.19
-	github.com/yyle88/gormcngen v1.0.36
-	github.com/yyle88/gormcnm v1.0.46
+	github.com/yyle88/gormcngen v1.0.37
+	github.com/yyle88/gormcnm v1.0.47
 	github.com/yyle88/must v0.0.16
 	github.com/yyle88/mutexmap v1.0.10
 	github.com/yyle88/neatjson v0.0.11

@@ -34,6 +34,12 @@ func Msc[MOD classtype.ModelType[CLS], CLS any](one MOD) (MOD, []MOD, CLS) {
 	return one, []MOD{}, one.Columns()
 }
 
+// Nsc returns the model (`mod`), a slice of models (`[]MOD`) with a specified initial capacity, and the associated columns (`cls`),
+// Nsc 返回模型（`mod`）、具有指定初始容量的模型切片（`[]MOD`）和关联的列（`cls`）。
+func Nsc[MOD classtype.ModelType[CLS], CLS any](one MOD, cap int) (MOD, []MOD, CLS) {
+	return one, make([]MOD, 0, cap), one.Columns()
+}
+
 // One returns the model (mod), ensuring type safety by checking whether the argument is a pointer type at compile-time.
 // One 返回模型（mod），通过编译时检查确保类型安全。
 func One[MOD classtype.ModelType[CLS], CLS any](one MOD) MOD {

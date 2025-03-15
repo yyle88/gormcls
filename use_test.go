@@ -231,6 +231,17 @@ func TestMscWithExample(t *testing.T) {
 	require.True(t, cls.OK(), "Expected cls to be OK for Example")
 	t.Logf("Msc TableName: %s", one.TableName())
 	t.Logf("Msc examples: %s", neatjsons.S(examples))
+	t.Logf("result cap: %d", cap(examples))
+}
+
+// Demonstrates the usage of the Nsc function with the Example model.
+// 演示如何使用 Nsc 函数处理 Example 模型。
+func TestNscWithExample(t *testing.T) {
+	one, examples, cls := gormcls.Nsc(&Example{}, 32)
+	require.True(t, cls.OK(), "Expected cls to be OK for Example")
+	t.Logf("Msc TableName: %s", one.TableName())
+	t.Logf("Msc examples: %s", neatjsons.S(examples))
+	t.Logf("result cap: %d", cap(examples))
 }
 
 func TestExample(t *testing.T) {

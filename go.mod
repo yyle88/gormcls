@@ -4,6 +4,7 @@ go 1.22.8
 
 require (
 	github.com/google/uuid v1.6.0
+	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/done v1.0.22
 	github.com/yyle88/erero v1.0.19
@@ -24,7 +25,6 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/mattn/go-sqlite3 v1.14.24 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/yyle88/formatgo v1.0.23 // indirect
 	github.com/yyle88/printgo v1.0.3 // indirect

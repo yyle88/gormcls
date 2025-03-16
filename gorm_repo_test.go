@@ -90,6 +90,31 @@ func TestRepo_FirstX(t *testing.T) {
 	}
 }
 
+func TestRepo_FirstE(t *testing.T) {
+	db := caseDB
+
+	repo := gormrepo.NewRepo(gormrepo.Umc(db, &Account{}))
+	require.True(t, repo.OK())
+
+	{
+		one, erb := repo.FirstE(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Where(cls.Username.Eq("demo-1-username"))
+		})
+		require.Nil(t, erb)
+		require.Equal(t, "demo-1-nickname", one.Nickname)
+	}
+
+	{
+		one, erb := repo.FirstE(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Where(cls.Username.Eq("demo-x-username"))
+		})
+		require.NotNil(t, erb)
+		require.ErrorIs(t, erb.ErrCause(), gorm.ErrRecordNotFound)
+		require.True(t, erb.NotExist())
+		require.Nil(t, one)
+	}
+}
+
 func TestRepo_Exist(t *testing.T) {
 	db := caseDB
 

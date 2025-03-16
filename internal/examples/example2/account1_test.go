@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/done"
-	"github.com/yyle88/gormrepo/gormcls"
+	"github.com/yyle88/gormrepo/gormclass"
 	"github.com/yyle88/gormrepo/internal/examples/example2/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -36,7 +36,7 @@ func TestCompare(t *testing.T) {
 		{
 			stm := time.Now()
 			for i := 0; i < count; i++ {
-				gormcls.Umc(one) //由于不使用缓存所以每次都要计算，但实际也能看到影响是特别小的
+				gormclass.Umc(one) //由于不使用缓存所以每次都要计算，但实际也能看到影响是特别小的
 			}
 			t.Log("--0--", time.Since(stm))
 		}

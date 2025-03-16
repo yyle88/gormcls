@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/yyle88/done"
-	"github.com/yyle88/gormrepo/gormcls"
+	"github.com/yyle88/gormrepo/gormclass"
 	"github.com/yyle88/gormrepo/internal/examples/example1/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -51,20 +51,20 @@ func TestExample(t *testing.T) {
 	require.NoError(t, db.Create(example2).Error)
 
 	var resA models.Example
-	if cls := gormcls.Cls(&models.Example{}); cls.OK() {
+	if cls := gormclass.Cls(&models.Example{}); cls.OK() {
 		require.NoError(t, db.Table(resA.TableName()).Where(cls.Name.Eq("aaa")).First(&resA).Error)
 		require.Equal(t, "aaa", resA.Name)
 	}
 	t.Log("select res.name:", resA.Name)
 
 	var maxAge int
-	if one, cls := gormcls.Use(&models.Example{}); cls.OK() {
+	if one, cls := gormclass.Use(&models.Example{}); cls.OK() {
 		require.NoError(t, db.Model(one).Where(cls.Age.Gt(0)).Select(cls.Age.COALESCE().MaxStmt("age_alias")).First(&maxAge).Error)
 		require.Equal(t, 2, maxAge)
 	}
 	t.Log("max_age:", maxAge)
 
-	if one, cls := gormcls.Use(&models.Example{}); cls.OK() {
+	if one, cls := gormclass.Use(&models.Example{}); cls.OK() {
 		require.NoError(t, db.Model(one).Where(cls.Name.Eq("bbb")).Update(cls.Age.Kv(18)).Error)
 		require.Equal(t, 18, one.Age)
 	}

@@ -28,7 +28,7 @@ go get github.com/yyle88/gormrepo
 
 ```go
 var example Example
-if cls := gormcls.Cls(&Example{}); cls.OK() {
+if cls := gormclass.Cls(&Example{}); cls.OK() {
 	err := db.Table(example.TableName()).Where(cls.Name.Eq("test")).First(&example).Error
     must.Done(err)
     fmt.Println("Fetched Name:", example.Name)
@@ -38,7 +38,7 @@ if cls := gormcls.Cls(&Example{}); cls.OK() {
 #### 更新数据
 
 ```go
-if one, cls := gormcls.Use(&Example{}); cls.OK() {
+if one, cls := gormclass.Use(&Example{}); cls.OK() {
     err := db.Model(one).Where(cls.Name.Eq("test")).Update(cls.Age.Kv(30)).Error
     must.Done(err)
     fmt.Println("Age updated to:", 30)
@@ -49,7 +49,7 @@ if one, cls := gormcls.Use(&Example{}); cls.OK() {
 
 ```go
 var maxAge int
-if one, cls := gormcls.Use(&Example{}); cls.OK() {
+if one, cls := gormclass.Use(&Example{}); cls.OK() {
 	err := db.Model(one).Select(cls.Age.COALESCE().MaxStmt("max_age")).First(&maxAge).Error
 	must.Done(err)
     fmt.Println("Max Age:", maxAge)

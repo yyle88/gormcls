@@ -1,4 +1,4 @@
-package gormcls
+package gormclass
 
 import (
 	"github.com/yyle88/gormrepo/gormmodelclass"

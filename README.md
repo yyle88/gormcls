@@ -2,7 +2,7 @@
 [![GoDoc](https://pkg.go.dev/badge/github.com/yyle88/gormrepo)](https://pkg.go.dev/github.com/yyle88/gormrepo)
 [![Coverage Status](https://img.shields.io/coveralls/github/yyle88/gormrepo/master.svg)](https://coveralls.io/github/yyle88/gormrepo?branch=main)
 ![Supported Go Versions](https://img.shields.io/badge/Go-1.22%2C%201.23-lightgrey.svg)
-[![GitHub Release](https://img.shields.io/github/release/yyle88/gormcls.svg)](https://github.com/yyle88/gormrepo/releases)
+[![GitHub Release](https://img.shields.io/github/release/yyle88/gormrepo.svg)](https://github.com/yyle88/gormrepo/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yyle88/gormrepo)](https://goreportcard.com/report/github.com/yyle88/gormrepo)
 
 # gormrepo - Isolate the scope of temporary variables when using GORM, making the code more concise
@@ -35,7 +35,7 @@ go get github.com/yyle88/gormrepo
 
 ```go
 var example Example
-if cls := gormcls.Cls(&Example{}); cls.OK() {
+if cls := gormclass.Cls(&Example{}); cls.OK() {
 	err := db.Table(example.TableName()).Where(cls.Name.Eq("test")).First(&example).Error
     must.Done(err)
     fmt.Println("Fetched Name:", example.Name)
@@ -45,7 +45,7 @@ if cls := gormcls.Cls(&Example{}); cls.OK() {
 #### Update Data
 
 ```go
-if one, cls := gormcls.Use(&Example{}); cls.OK() {
+if one, cls := gormclass.Use(&Example{}); cls.OK() {
     err := db.Model(one).Where(cls.Name.Eq("test")).Update(cls.Age.Kv(30)).Error
     must.Done(err)
     fmt.Println("Age updated to:", 30)
@@ -56,7 +56,7 @@ if one, cls := gormcls.Use(&Example{}); cls.OK() {
 
 ```go
 var maxAge int
-if one, cls := gormcls.Use(&Example{}); cls.OK() {
+if one, cls := gormclass.Use(&Example{}); cls.OK() {
 	err := db.Model(one).Select(cls.Age.COALESCE().MaxStmt("max_age")).First(&maxAge).Error
 	must.Done(err)
     fmt.Println("Max Age:", maxAge)
@@ -101,4 +101,4 @@ Give me stars. Thank you!!!
 
 ## Starring
 
-[![starring](https://starchart.cc/yyle88/gormcls.svg?variant=adaptive)](https://starchart.cc/yyle88/gormrepo)
+[![starring](https://starchart.cc/yyle88/gormrepo.svg?variant=adaptive)](https://starchart.cc/yyle88/gormrepo)

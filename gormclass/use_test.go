@@ -1,4 +1,4 @@
-package gormcls_test
+package gormclass_test
 
 import (
 	"reflect"
@@ -9,7 +9,7 @@ import (
 	"github.com/yyle88/done"
 	"github.com/yyle88/gormcngen"
 	"github.com/yyle88/gormcnm"
-	"github.com/yyle88/gormrepo/gormcls"
+	"github.com/yyle88/gormrepo/gormclass"
 	"github.com/yyle88/neatjson/neatjsons"
 	"github.com/yyle88/osexistpath/osmustexist"
 	"github.com/yyle88/runpath"
@@ -118,7 +118,7 @@ func TestGenerateColumns(t *testing.T) {
 func TestUseAccount(t *testing.T) {
 	// Example: Using gormrepo with Account model
 	// 示例：使用 gormrepo 处理 Account 模型
-	if account, cls := gormcls.Use(&Account{}); cls.OK() {
+	if account, cls := gormclass.Use(&Account{}); cls.OK() {
 		t.Logf("TableName: %s", account.TableName())
 		t.Logf("Columns: %s", neatjsons.S(cls))
 	}
@@ -137,7 +137,7 @@ func TestUseAccount(t *testing.T) {
 func TestUseExample(t *testing.T) {
 	// Example: Using gormrepo with Example model
 	// 示例：使用 gormrepo 处理 Example 模型
-	if example, cls := gormcls.Use(&Example{}); cls.OK() {
+	if example, cls := gormclass.Use(&Example{}); cls.OK() {
 		t.Logf("TableName: %s", example.TableName())
 		t.Logf("Columns: %s", neatjsons.S(cls))
 	}
@@ -171,7 +171,7 @@ func TestAccountAndExample(t *testing.T) {
 // Demonstrates how to retrieve column information for the Account model.
 // 演示如何访问 Account 模型的列信息。
 func TestColumnsWithAccount(t *testing.T) {
-	cls := gormcls.Cls(&Account{})
+	cls := gormclass.Cls(&Account{})
 	require.True(t, cls.OK(), "Expected cls to be OK for Account")
 	t.Logf("Account Columns: %s", neatjsons.S(cls))
 }
@@ -182,13 +182,13 @@ func TestEnsurePointerInputType(t *testing.T) {
 
 	{
 		var account Account
-		one := gormcls.One(&account)
+		one := gormclass.One(&account)
 		require.Equal(t, reflect.Ptr, reflect.TypeOf(one).Kind(), "Expected pointer type")
 	}
 
 	{
 		example := Example{}
-		one := gormcls.One(&example)
+		one := gormclass.One(&example)
 		require.Equal(t, reflect.Ptr, reflect.TypeOf(one).Kind(), "Expected pointer type")
 	}
 }
@@ -196,14 +196,14 @@ func TestEnsurePointerInputType(t *testing.T) {
 // Demonstrates the usage of the Ums function with the Example model.
 // 演示如何使用 Ums 函数处理 Example 模型。
 func TestUmsWithExample(t *testing.T) {
-	examples := gormcls.Ums(&Example{})
+	examples := gormclass.Ums(&Example{})
 	t.Logf("Ums result: %s", neatjsons.S(examples))
 }
 
 // Demonstrates the usage of the Uss function with the Example model.
 // 演示如何使用 Uss 函数处理 Example 模型。
 func TestUssWithExample(t *testing.T) {
-	examples := gormcls.Uss[*Example]()
+	examples := gormclass.Uss[*Example]()
 	t.Logf("Uss result: %s", neatjsons.S(examples))
 	t.Logf("result cap: %d", cap(examples))
 }
@@ -211,7 +211,7 @@ func TestUssWithExample(t *testing.T) {
 // Demonstrates the usage of the Usn function with the Example model.
 // 演示如何使用 Usn 函数处理 Example 模型。
 func TestUsnWithExample(t *testing.T) {
-	examples := gormcls.Usn[*Example](100)
+	examples := gormclass.Usn[*Example](100)
 	t.Logf("Usn result: %s", neatjsons.S(examples))
 	t.Logf("result cap: %d", cap(examples))
 }
@@ -219,7 +219,7 @@ func TestUsnWithExample(t *testing.T) {
 // Demonstrates the usage of the Usc function with the Example model.
 // 演示如何使用 Usc 函数处理 Example 模型。
 func TestUscWithExample(t *testing.T) {
-	examples, cls := gormcls.Usc(&Example{})
+	examples, cls := gormclass.Usc(&Example{})
 	require.True(t, cls.OK(), "Expected cls to be OK for Example")
 	t.Logf("Usc result: %s", neatjsons.S(examples))
 }
@@ -227,7 +227,7 @@ func TestUscWithExample(t *testing.T) {
 // Demonstrates the usage of the Msc function with the Example model.
 // 演示如何使用 Msc 函数处理 Example 模型。
 func TestMscWithExample(t *testing.T) {
-	one, examples, cls := gormcls.Msc(&Example{})
+	one, examples, cls := gormclass.Msc(&Example{})
 	require.True(t, cls.OK(), "Expected cls to be OK for Example")
 	t.Logf("Msc TableName: %s", one.TableName())
 	t.Logf("Msc examples: %s", neatjsons.S(examples))
@@ -237,7 +237,7 @@ func TestMscWithExample(t *testing.T) {
 // Demonstrates the usage of the Nsc function with the Example model.
 // 演示如何使用 Nsc 函数处理 Example 模型。
 func TestNscWithExample(t *testing.T) {
-	one, examples, cls := gormcls.Nsc(&Example{}, 32)
+	one, examples, cls := gormclass.Nsc(&Example{}, 32)
 	require.True(t, cls.OK(), "Expected cls to be OK for Example")
 	t.Logf("Msc TableName: %s", one.TableName())
 	t.Logf("Msc examples: %s", neatjsons.S(examples))
@@ -273,20 +273,20 @@ func TestExample(t *testing.T) {
 	require.NoError(t, db.Create(example2).Error)
 
 	var resA Example
-	if cls := gormcls.Cls(&Example{}); cls.OK() {
+	if cls := gormclass.Cls(&Example{}); cls.OK() {
 		require.NoError(t, db.Table(resA.TableName()).Where(cls.Name.Eq("aaa")).First(&resA).Error)
 		require.Equal(t, "aaa", resA.Name)
 	}
 	t.Log("select res.name:", resA.Name)
 
 	var maxAge int
-	if one, cls := gormcls.Use(&Example{}); cls.OK() {
+	if one, cls := gormclass.Use(&Example{}); cls.OK() {
 		require.NoError(t, db.Model(one).Where(cls.Age.Gt(0)).Select(cls.Age.COALESCE().MaxStmt("age_alias")).First(&maxAge).Error)
 		require.Equal(t, 2, maxAge)
 	}
 	t.Log("max_age:", maxAge)
 
-	if one, cls := gormcls.Use(&Example{}); cls.OK() {
+	if one, cls := gormclass.Use(&Example{}); cls.OK() {
 		require.NoError(t, db.Model(one).Where(cls.Name.Eq("bbb")).Update(cls.Age.Kv(18)).Error)
 		require.Equal(t, 18, one.Age)
 	}

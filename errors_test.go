@@ -11,12 +11,12 @@ import (
 func TestNewErrorOrNotExist(t *testing.T) {
 	{
 		erb := NewErrorOrNotExist(errors.New("wrong"))
-		require.NotErrorIs(t, erb.ErrCause(), gorm.ErrRecordNotFound)
-		require.False(t, erb.NotExist())
+		require.NotErrorIs(t, erb.ErrCause, gorm.ErrRecordNotFound)
+		require.False(t, erb.NotExist)
 	}
 	{
 		erb := NewErrorOrNotExist(gorm.ErrRecordNotFound)
-		require.ErrorIs(t, erb.ErrCause(), gorm.ErrRecordNotFound)
-		require.True(t, erb.NotExist())
+		require.ErrorIs(t, erb.ErrCause, gorm.ErrRecordNotFound)
+		require.True(t, erb.NotExist)
 	}
 }

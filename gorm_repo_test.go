@@ -109,8 +109,8 @@ func TestRepo_FirstE(t *testing.T) {
 			return db.Where(cls.Username.Eq("demo-x-username"))
 		})
 		require.NotNil(t, erb)
-		require.ErrorIs(t, erb.ErrCause(), gorm.ErrRecordNotFound)
-		require.True(t, erb.NotExist())
+		require.ErrorIs(t, erb.ErrCause, gorm.ErrRecordNotFound)
+		require.True(t, erb.NotExist)
 		require.Nil(t, one)
 	}
 }

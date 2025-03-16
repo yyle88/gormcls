@@ -6,27 +6,19 @@ import (
 )
 
 type ErrorOrNotExist struct {
-	errCause error
-	notExist bool
+	ErrCause error
+	NotExist bool
 }
 
 func NewErrorOrNotExist(errCause error) *ErrorOrNotExist {
 	if errors.Is(errCause, gorm.ErrRecordNotFound) {
 		return &ErrorOrNotExist{
-			errCause: errCause,
-			notExist: true,
+			ErrCause: errCause,
+			NotExist: true,
 		}
 	}
 	return &ErrorOrNotExist{
-		errCause: errCause,
-		notExist: false,
+		ErrCause: errCause,
+		NotExist: false,
 	}
-}
-
-func (e *ErrorOrNotExist) ErrCause() error {
-	return e.errCause
-}
-
-func (e *ErrorOrNotExist) NotExist() bool {
-	return e.notExist
 }

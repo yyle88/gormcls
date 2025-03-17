@@ -5,11 +5,13 @@
 [![GitHub Release](https://img.shields.io/github/release/yyle88/gormrepo.svg)](https://github.com/yyle88/gormrepo/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/yyle88/gormrepo)](https://goreportcard.com/report/github.com/yyle88/gormrepo)
 
-# gormrepo - Isolate the scope of temporary variables when using GORM, making the code more concise
+# gormrepo - Provides simple CRUD operations, simplifying GORM usage
 
-`gormrepo` isolates the **scope of temporary variables** when working with `GORM`, simplifying database operations and making the code more concise.
+`gormrepo` provides simple CRUD operations when using `GORM`, adding repositories package.
 
-`gormrepo` works in conjunction with [gormcnm](https://github.com/yyle88/gormcnm) and [gormcngen](https://github.com/yyle88/gormcngen), simplifying GORM development and optimizing the management of temporary variable scopes.
+`gormrepo` isolates the **scope of temp-variables** when using `GORM`, simplifying database operations and making the code more concise.
+
+`gormrepo` works in conjunction with [gormcnm](https://github.com/yyle88/gormcnm) and [gormcngen](https://github.com/yyle88/gormcngen), simplifying GORM development and optimizing the management of temp-variable scopes.
 
 ---
 
@@ -31,7 +33,37 @@ go get github.com/yyle88/gormrepo
 
 ### Example Code
 
-#### Query Data
+#### Select Data
+
+```go
+repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+
+var account Account
+require.NoError(t, repo.First(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+    return db.Where(cls.Username.Eq("demo-1-username"))
+}, &account).Error)
+require.Equal(t, "demo-1-nickname", account.Nickname)
+```
+
+#### Update Data
+
+```go
+repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+
+newNickname := uuid.New().String()
+newPassword := uuid.New().String()
+err := repo.Updates(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+    return db.Where(cls.Username.Eq(username))
+}, func(cls *AccountColumns) map[string]interface{} {
+    return cls.
+        Kw(cls.Nickname.Kv(newNickname)).
+        Kw(cls.Password.Kv(newPassword)).
+        AsMap()
+})
+require.NoError(t, err)
+```
+
+#### Select Data
 
 ```go
 var example Example
@@ -52,7 +84,7 @@ if one, cls := gormclass.Use(&Example{}); cls.OK() {
 }
 ```
 
-#### Get Maximum Value
+#### Select Maximum Value
 
 ```go
 var maxAge int
@@ -65,7 +97,7 @@ if one, cls := gormclass.Use(&Example{}); cls.OK() {
 
 ---
 
-## API Overview
+## Gorm-Class-API Overview
 
 | Function | Param | Return            | Description                                                                                                                                        | 
 |----------|-------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|

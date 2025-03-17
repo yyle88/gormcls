@@ -1,19 +1,19 @@
 package gormrepo
 
 import (
-	"github.com/yyle88/must"
 	"gorm.io/gorm"
 )
 
 type Repo[MOD any, CLS any] struct {
 	db  *gorm.DB
+	mod *MOD
 	cls CLS
 }
 
-func NewRepo[MOD any, CLS any](db *gorm.DB, one *MOD, cls CLS) *Repo[MOD, CLS] {
-	must.Nice(one) //只存类型信息，而不存实体避免共享内存
+func NewRepo[MOD any, CLS any](db *gorm.DB, _ *MOD, cls CLS) *Repo[MOD, CLS] {
 	return &Repo[MOD, CLS]{
 		db:  db,
+		mod: nil, // 这里就是设置个空值避免共享对象
 		cls: cls,
 	}
 }

@@ -1,4 +1,6 @@
-# gormrepo - 隔离临时变量的作用域，简化 GORM 操作
+# gormrepo - 提供简单的增删改查，简化 GORM 操作
+
+`gormrepo` 在使用 `GORM` 时，提供简单的增删改查操作，相当于增加 repositories 的逻辑。
 
 `gormrepo` 在使用 `GORM` 时，**隔离临时变量的作用域**，简化数据库操作，使代码更加简洁。
 
@@ -27,6 +29,36 @@ go get github.com/yyle88/gormrepo
 #### 查询数据
 
 ```go
+repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+
+var account Account
+require.NoError(t, repo.First(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+    return db.Where(cls.Username.Eq("demo-1-username"))
+}, &account).Error)
+require.Equal(t, "demo-1-nickname", account.Nickname)
+```
+
+#### 更新数据
+
+```go
+repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+
+newNickname := uuid.New().String()
+newPassword := uuid.New().String()
+err := repo.Updates(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+    return db.Where(cls.Username.Eq(username))
+}, func(cls *AccountColumns) map[string]interface{} {
+    return cls.
+        Kw(cls.Nickname.Kv(newNickname)).
+        Kw(cls.Password.Kv(newPassword)).
+        AsMap()
+})
+require.NoError(t, err)
+```
+
+#### 查询数据
+
+```go
 var example Example
 if cls := gormclass.Cls(&Example{}); cls.OK() {
 	err := db.Table(example.TableName()).Where(cls.Name.Eq("test")).First(&example).Error
@@ -45,7 +77,7 @@ if one, cls := gormclass.Use(&Example{}); cls.OK() {
 }
 ```
 
-#### 获取最大值
+#### 查询最大值
 
 ```go
 var maxAge int
@@ -58,7 +90,7 @@ if one, cls := gormclass.Use(&Example{}); cls.OK() {
 
 ---
 
-## API 概览
+## Gorm-Class-API 概览
 
 | 函数    | 参数    | 返回                | 描述                                                    | 
 |-------|-------|-------------------|-------------------------------------------------------|

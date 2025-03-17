@@ -11,14 +11,8 @@ type ErrorOrNotExist struct {
 }
 
 func NewErrorOrNotExist(errCause error) *ErrorOrNotExist {
-	if errors.Is(errCause, gorm.ErrRecordNotFound) {
-		return &ErrorOrNotExist{
-			ErrCause: errCause,
-			NotExist: true,
-		}
-	}
 	return &ErrorOrNotExist{
 		ErrCause: errCause,
-		NotExist: false,
+		NotExist: errors.Is(errCause, gorm.ErrRecordNotFound),
 	}
 }

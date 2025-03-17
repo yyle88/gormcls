@@ -9,13 +9,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func TestAbstractRepo_NewRepo(t *testing.T) {
+func TestRepo_NewGormRepo(t *testing.T) {
 	db := caseDB
 
-	accountRepo := gormrepo.NewAbstractRepo(gormclass.Use(&Account{}))
+	accountRepo := gormrepo.NewRepo(gormclass.Use(&Account{}))
 
 	{
-		repo := accountRepo.NewRepo(db)
+		repo := accountRepo.NewGormRepo(db)
 
 		res, err := repo.FirstX(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
 			return db.Where(cls.Username.Eq("demo-1-username"))
@@ -25,7 +25,7 @@ func TestAbstractRepo_NewRepo(t *testing.T) {
 	}
 
 	require.NoError(t, db.Transaction(func(db *gorm.DB) error {
-		repo := accountRepo.NewRepo(db)
+		repo := accountRepo.NewGormRepo(db)
 
 		res, err := repo.FirstX(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
 			return db.Where(cls.Username.Eq("demo-2-username"))

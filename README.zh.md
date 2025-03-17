@@ -29,7 +29,7 @@ go get github.com/yyle88/gormrepo
 #### 查询数据
 
 ```go
-repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
 
 var account Account
 require.NoError(t, repo.First(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
@@ -41,7 +41,7 @@ require.Equal(t, "demo-1-nickname", account.Nickname)
 #### 更新数据
 
 ```go
-repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
 
 newNickname := uuid.New().String()
 newPassword := uuid.New().String()

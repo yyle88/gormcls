@@ -44,10 +44,10 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func TestRepo_First(t *testing.T) {
+func TestGormRepo_First(t *testing.T) {
 	db := caseDB
 
-	repo := gormrepo.NewRepo(gormrepo.Umc(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(db, &Account{}))
 	require.True(t, repo.OK())
 
 	{
@@ -67,10 +67,10 @@ func TestRepo_First(t *testing.T) {
 	}
 }
 
-func TestRepo_FirstX(t *testing.T) {
+func TestGormRepo_FirstX(t *testing.T) {
 	db := caseDB
 
-	repo := gormrepo.NewRepo(gormrepo.Umc(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(db, &Account{}))
 	require.True(t, repo.OK())
 
 	{
@@ -90,10 +90,10 @@ func TestRepo_FirstX(t *testing.T) {
 	}
 }
 
-func TestRepo_FirstE(t *testing.T) {
+func TestGormRepo_FirstE(t *testing.T) {
 	db := caseDB
 
-	repo := gormrepo.NewRepo(gormrepo.Umc(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(db, &Account{}))
 	require.True(t, repo.OK())
 
 	{
@@ -115,10 +115,10 @@ func TestRepo_FirstE(t *testing.T) {
 	}
 }
 
-func TestRepo_Exist(t *testing.T) {
+func TestGormRepo_Exist(t *testing.T) {
 	db := caseDB
 
-	repo := gormrepo.NewRepo(gormrepo.Umc(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(db, &Account{}))
 	require.True(t, repo.OK())
 
 	{
@@ -138,10 +138,10 @@ func TestRepo_Exist(t *testing.T) {
 	}
 }
 
-func TestRepo_Find(t *testing.T) {
+func TestGormRepo_Find(t *testing.T) {
 	db := caseDB
 
-	repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
 	require.True(t, repo.OK())
 
 	var accounts []*Account
@@ -152,10 +152,10 @@ func TestRepo_Find(t *testing.T) {
 	t.Log(neatjsons.S(accounts))
 }
 
-func TestRepo_FindX(t *testing.T) {
+func TestGormRepo_FindX(t *testing.T) {
 	db := caseDB
 
-	repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
 	require.True(t, repo.OK())
 
 	accounts, err := repo.FindX(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
@@ -166,10 +166,10 @@ func TestRepo_FindX(t *testing.T) {
 	t.Log(neatjsons.S(accounts))
 }
 
-func TestRepo_FindN(t *testing.T) {
+func TestGormRepo_FindN(t *testing.T) {
 	db := caseDB
 
-	repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
 	require.True(t, repo.OK())
 
 	accounts, err := repo.FindN(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
@@ -180,7 +180,7 @@ func TestRepo_FindN(t *testing.T) {
 	t.Log(neatjsons.S(accounts))
 }
 
-func TestRepo_Update(t *testing.T) {
+func TestGormRepo_Update(t *testing.T) {
 	db := caseDB
 
 	username := uuid.New().String()
@@ -192,7 +192,7 @@ func TestRepo_Update(t *testing.T) {
 		Nickname: uuid.New().String(),
 	}).Error)
 
-	repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
 	require.True(t, repo.OK())
 
 	newNickname := uuid.New().String()
@@ -210,7 +210,7 @@ func TestRepo_Update(t *testing.T) {
 	require.Equal(t, newNickname, res.Nickname)
 }
 
-func TestRepo_Updates(t *testing.T) {
+func TestGormRepo_Updates(t *testing.T) {
 	db := caseDB
 
 	username := uuid.New().String()
@@ -222,7 +222,7 @@ func TestRepo_Updates(t *testing.T) {
 		Nickname: uuid.New().String(),
 	}).Error)
 
-	repo := gormrepo.NewRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
 	require.True(t, repo.OK())
 
 	newNickname := uuid.New().String()

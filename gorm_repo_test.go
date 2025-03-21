@@ -140,6 +140,34 @@ func TestGormRepo_Where(t *testing.T) {
 	}
 }
 
+func TestGormRepo_WhereE(t *testing.T) {
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(caseDB, &Account{}))
+	require.True(t, repo.OK())
+
+	{
+		var passwords []string
+		require.NoError(t, repo.WhereE(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Model(&Account{}).Where(cls.Username.In([]string{"demo-1-username", "demo-2-username"}))
+		}, func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Distinct(cls.Password.Name()).Find(&passwords)
+		}))
+		t.Log(passwords)
+		require.Len(t, passwords, 2)
+		sort.Strings(passwords)
+		require.Equal(t, []string{"demo-1-password", "demo-2-password"}, passwords)
+	}
+	{
+		var nickname string
+		require.NoError(t, repo.WhereE(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Model(&Account{}).Where(cls.Username.In([]string{"demo-1-username", "demo-2-username"}))
+		}, func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Select("MAX(" + cls.Nickname.Name() + ")").First(&nickname)
+		}))
+		t.Log(nickname)
+		require.Equal(t, "demo-2-nickname", nickname)
+	}
+}
+
 func TestGormRepo_Exist(t *testing.T) {
 	repo := gormrepo.NewGormRepo(gormrepo.Umc(caseDB, &Account{}))
 	require.True(t, repo.OK())

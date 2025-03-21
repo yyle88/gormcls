@@ -1,6 +1,7 @@
 package gormrepo_test
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/google/uuid"
@@ -45,9 +46,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestGormRepo_First(t *testing.T) {
-	db := caseDB
-
-	repo := gormrepo.NewGormRepo(gormrepo.Umc(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	{
@@ -68,9 +67,7 @@ func TestGormRepo_First(t *testing.T) {
 }
 
 func TestGormRepo_FirstX(t *testing.T) {
-	db := caseDB
-
-	repo := gormrepo.NewGormRepo(gormrepo.Umc(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	{
@@ -91,9 +88,7 @@ func TestGormRepo_FirstX(t *testing.T) {
 }
 
 func TestGormRepo_FirstE(t *testing.T) {
-	db := caseDB
-
-	repo := gormrepo.NewGormRepo(gormrepo.Umc(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	{
@@ -115,10 +110,38 @@ func TestGormRepo_FirstE(t *testing.T) {
 	}
 }
 
-func TestGormRepo_Exist(t *testing.T) {
-	db := caseDB
+func TestGormRepo_Where(t *testing.T) {
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(caseDB, &Account{}))
+	require.True(t, repo.OK())
 
-	repo := gormrepo.NewGormRepo(gormrepo.Umc(db, &Account{}))
+	{
+		var nicknames []string
+		db := repo.Where(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Model(&Account{}).
+				Where(cls.Username.In([]string{"demo-1-username", "demo-2-username"})).
+				Distinct(cls.Nickname.Name())
+		})
+		require.NoError(t, db.Find(&nicknames).Error)
+		t.Log(nicknames)
+		require.Len(t, nicknames, 2)
+		sort.Strings(nicknames)
+		require.Equal(t, []string{"demo-1-nickname", "demo-2-nickname"}, nicknames)
+	}
+	{
+		var nickname string
+		db := repo.Where(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Model(&Account{}).
+				Select("MIN(" + cls.Nickname.Name() + ")").
+				Where(cls.Username.In([]string{"demo-1-username", "demo-2-username"}))
+		})
+		require.NoError(t, db.First(&nickname).Error)
+		t.Log(nickname)
+		require.Equal(t, "demo-1-nickname", nickname)
+	}
+}
+
+func TestGormRepo_Exist(t *testing.T) {
+	repo := gormrepo.NewGormRepo(gormrepo.Umc(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	{
@@ -139,9 +162,7 @@ func TestGormRepo_Exist(t *testing.T) {
 }
 
 func TestGormRepo_Find(t *testing.T) {
-	db := caseDB
-
-	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	var accounts []*Account
@@ -153,9 +174,7 @@ func TestGormRepo_Find(t *testing.T) {
 }
 
 func TestGormRepo_FindX(t *testing.T) {
-	db := caseDB
-
-	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	accounts, err := repo.FindX(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
@@ -167,9 +186,7 @@ func TestGormRepo_FindX(t *testing.T) {
 }
 
 func TestGormRepo_FindN(t *testing.T) {
-	db := caseDB
-
-	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	accounts, err := repo.FindN(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
@@ -181,18 +198,16 @@ func TestGormRepo_FindN(t *testing.T) {
 }
 
 func TestGormRepo_Update(t *testing.T) {
-	db := caseDB
-
 	username := uuid.New().String()
 
-	require.NoError(t, db.Save(&Account{
+	require.NoError(t, caseDB.Save(&Account{
 		Model:    gorm.Model{},
 		Username: username,
 		Password: uuid.New().String(),
 		Nickname: uuid.New().String(),
 	}).Error)
 
-	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	newNickname := uuid.New().String()
@@ -211,18 +226,16 @@ func TestGormRepo_Update(t *testing.T) {
 }
 
 func TestGormRepo_Updates(t *testing.T) {
-	db := caseDB
-
 	username := uuid.New().String()
 
-	require.NoError(t, db.Save(&Account{
+	require.NoError(t, caseDB.Save(&Account{
 		Model:    gorm.Model{},
 		Username: username,
 		Password: uuid.New().String(),
 		Nickname: uuid.New().String(),
 	}).Error)
 
-	repo := gormrepo.NewGormRepo(gormrepo.Use(db, &Account{}))
+	repo := gormrepo.NewGormRepo(gormrepo.Use(caseDB, &Account{}))
 	require.True(t, repo.OK())
 
 	newNickname := uuid.New().String()

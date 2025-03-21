@@ -42,6 +42,10 @@ func (repo *GormRepo[MOD, CLS]) FirstE(where func(db *gorm.DB, cls CLS) *gorm.DB
 	return result, nil
 }
 
+func (repo *GormRepo[MOD, CLS]) Where(where func(db *gorm.DB, cls CLS) *gorm.DB) *gorm.DB {
+	return where(repo.db, repo.cls)
+}
+
 func (repo *GormRepo[MOD, CLS]) Exist(where func(db *gorm.DB, cls CLS) *gorm.DB) (bool, error) {
 	var exists bool
 	if err := where(repo.db, repo.cls).Model(new(MOD)).Select("1").Limit(1).Find(&exists).Error; err != nil {

@@ -1,8 +1,8 @@
-package gormmodelclass
+package gormclass
 
-// ModelType is used for models that implement the Columns method to return associated columns (cls).
-// ModelType 用于实现 Columns 方法以返回关联列（cls）的模型。
-type ModelType[CLS any] interface {
+// GormClass is used for models that implement the Columns method to return associated columns (cls).
+// GormClass 用于实现 Columns 方法以返回关联列（cls）的模型。
+type GormClass[CLS any] interface {
 	Columns() CLS
 }
 

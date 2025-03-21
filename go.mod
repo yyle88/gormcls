@@ -8,9 +8,9 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/yyle88/done v1.0.22
 	github.com/yyle88/erero v1.0.19
-	github.com/yyle88/gormcngen v1.0.37
-	github.com/yyle88/gormcnm v1.0.47
-	github.com/yyle88/must v0.0.16
+	github.com/yyle88/gormcngen v1.0.38
+	github.com/yyle88/gormcnm v1.0.48
+	github.com/yyle88/must v0.0.17
 	github.com/yyle88/mutexmap v1.0.10
 	github.com/yyle88/neatjson v0.0.12
 	github.com/yyle88/osexistpath v0.0.17
@@ -31,7 +31,7 @@ require (
 	github.com/yyle88/sortslice v1.0.7 // indirect
 	github.com/yyle88/sure v0.0.37 // indirect
 	github.com/yyle88/syntaxgo v0.0.47 // indirect
-	github.com/yyle88/tern v0.0.5 // indirect
+	github.com/yyle88/tern v0.0.6 // indirect
 	github.com/yyle88/zaplog v0.0.20 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect

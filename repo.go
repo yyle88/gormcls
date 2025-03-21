@@ -16,14 +16,6 @@ func NewRepo[MOD any, CLS any](_ *MOD, cls CLS) *Repo[MOD, CLS] {
 	}
 }
 
-func (repo *Repo[MOD, CLS]) NewGormRepo(db *gorm.DB) *GormRepo[MOD, CLS] {
-	return NewGormRepo(db, repo.mod, repo.cls)
-}
-
-func (repo *Repo[MOD, CLS]) GormRepo(db *gorm.DB) *GormRepo[MOD, CLS] {
-	return repo.NewGormRepo(db)
-}
-
 func (repo *Repo[MOD, CLS]) Gorm(db *gorm.DB) *GormRepo[MOD, CLS] {
-	return repo.NewGormRepo(db)
+	return NewGormRepo(db, repo.mod, repo.cls)
 }

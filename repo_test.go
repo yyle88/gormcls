@@ -29,3 +29,28 @@ func TestRepo_Gorm(t *testing.T) {
 		return nil
 	}))
 }
+
+func TestRepo_MoDB(t *testing.T) {
+	repo := gormrepo.NewRepo(gormclass.Use(&Account{}))
+
+	{
+		var nickname string
+		require.NoError(t, repo.MoDB(caseDB).WhereE(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Where(cls.Username.Eq("demo-1-username"))
+		}, func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Select(string(cls.Nickname)).First(&nickname)
+		}))
+		require.Equal(t, "demo-1-nickname", nickname)
+	}
+
+	require.NoError(t, caseDB.Transaction(func(db *gorm.DB) error {
+		var nickname string
+		require.NoError(t, repo.MoDB(db).WhereE(func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Where(cls.Username.Eq("demo-2-username"))
+		}, func(db *gorm.DB, cls *AccountColumns) *gorm.DB {
+			return db.Select(string(cls.Nickname)).First(&nickname)
+		}))
+		require.Equal(t, "demo-2-nickname", nickname)
+		return nil
+	}))
+}

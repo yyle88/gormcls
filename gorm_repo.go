@@ -56,7 +56,7 @@ func (repo *GormRepo[MOD, CLS]) WhereE(where func(db *gorm.DB, cls CLS) *gorm.DB
 
 func (repo *GormRepo[MOD, CLS]) Exist(where func(db *gorm.DB, cls CLS) *gorm.DB) (bool, error) {
 	var exists bool
-	if err := where(repo.db, repo.cls).Model(new(MOD)).Select("1").Limit(1).Find(&exists).Error; err != nil {
+	if err := where(repo.db, repo.cls).Model((*MOD)(nil)).Select("1").Limit(1).Find(&exists).Error; err != nil {
 		return false, err
 	}
 	return exists, nil
@@ -84,7 +84,7 @@ func (repo *GormRepo[MOD, CLS]) FindN(where func(db *gorm.DB, cls CLS) *gorm.DB,
 
 func (repo *GormRepo[MOD, CLS]) Update(where func(db *gorm.DB, cls CLS) *gorm.DB, valueFunc func(cls CLS) (string, interface{})) error {
 	column, value := valueFunc(repo.cls)
-	if err := where(repo.db, repo.cls).Model(new(MOD)).Update(column, value).Error; err != nil {
+	if err := where(repo.db, repo.cls).Model((*MOD)(nil)).Update(column, value).Error; err != nil {
 		return err
 	}
 	return nil
@@ -92,7 +92,7 @@ func (repo *GormRepo[MOD, CLS]) Update(where func(db *gorm.DB, cls CLS) *gorm.DB
 
 func (repo *GormRepo[MOD, CLS]) Updates(where func(db *gorm.DB, cls CLS) *gorm.DB, valuesFunc func(cls CLS) map[string]interface{}) error {
 	mp := valuesFunc(repo.cls)
-	if err := where(repo.db, repo.cls).Model(new(MOD)).Updates(mp).Error; err != nil {
+	if err := where(repo.db, repo.cls).Model((*MOD)(nil)).Updates(mp).Error; err != nil {
 		return err
 	}
 	return nil

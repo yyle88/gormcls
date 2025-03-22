@@ -20,6 +20,6 @@ func (repo *Repo[MOD, CLS]) Gorm(db *gorm.DB) *GormRepo[MOD, CLS] {
 	return NewGormRepo(db, repo.mod, repo.cls)
 }
 
-func (repo *Repo[MOD, CLS]) DBMo(db *gorm.DB) *GormRepo[MOD, CLS] {
+func (repo *Repo[MOD, CLS]) Morm(db *gorm.DB) *GormRepo[MOD, CLS] {
 	return NewGormRepo(db.Model((*MOD)(nil)), repo.mod, repo.cls)
 }
